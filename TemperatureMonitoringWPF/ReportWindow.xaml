@@ -5,26 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TemperatureMonitoringWPF"
         mc:Ignorable="d"
-        Title="Report" Height="450" Width="800">
+        Title="Report" Height="600" Width="900" Loaded="Window_Loaded">
     <Grid Margin="10">
-        <ListBox x:Name="Report" HorizontalAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding TitleDate}" />
-                        <TextBlock Text="{Binding TitleFact}" />
-                        <TextBlock Text="{Binding TitleStandart}" />
-                        <TextBlock Text="{Binding TitleDeviation}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBox x:Name="Buffer" Foreground="Transparent" Background="Transparent"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="307*"/>
+            <RowDefinition Height="107*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Report" Grid.Row="0" Grid.Column="0" FontSize="24" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
+        <TextBox x:Name="ReportMessage" Grid.Row="1" Grid.Column="0" FontSize="24" IsReadOnly="True"/>
+        <TextBox x:Name="Buffer" Foreground="Transparent" Background="Transparent" IsReadOnly="True"/>
+        <TextBox x:Name="BufferInt" Foreground="Transparent" Background="Transparent" IsReadOnly="True"/>
+        <Button Content="Save" Width="50" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
-    
-    
+
+
 </Window>

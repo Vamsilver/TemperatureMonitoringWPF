@@ -37,7 +37,7 @@ namespace TemperatureMonitoringWPF
             int minTempInt = int.Parse(minTemp.Text.ToString());
             int minTimeInt = int.Parse(minTime.Text.ToString());
 
-            var date = DateTime.Parse(Date.Text.ToString());
+            DateTime date = DateTime.Parse(Date.Text.ToString());
 
             string[] vs = Temperature.Text.ToString().Split(' ');
             int[] temp = new int[vs.Length];
@@ -49,17 +49,20 @@ namespace TemperatureMonitoringWPF
                 temp[i] = int.Parse(vs[i].ToString());
             }
 
-            foreach(var t in temp)
+            str += 2 + "\n";
+            str += maxTempInt + "\n";
+            str += minTempInt + "\n";
+
+            foreach (var t in temp)
             {
-                date.AddMinutes(10);
+                date = date.AddMinutes(10);
                 if(t > maxTempInt || t < minTempInt)
                 {
-                    int standartTemp = ((t >= maxTimeInt) ? maxTempInt : minTimeInt);
+                    int standartTemp = (t >= maxTimeInt) ? maxTempInt : minTempInt;
                     str += date.ToString() + "\t" + t + "\t" + standartTemp + "\t" + (standartTemp - t) + "\n";
                 }
             }
 
-            MessageBox.Show(str);
             return str;
         }
 
@@ -80,17 +83,35 @@ namespace TemperatureMonitoringWPF
                 temp[i] = int.Parse(vs[i].ToString());
             }
 
+            str += 1 + "\n" + maxTempInt + "\n";
+
             foreach (var t in temp)
             {
-                date.AddMinutes(10);
+                date = date.AddMinutes(10);
                 if (t > maxTempInt)
                 {
                     str += date.ToString() + "\t" + t + "\t" + maxTempInt + "\t" + (maxTempInt - t) + "\n";
                 }
             }
 
-            MessageBox.Show(str);
             return str;
+        }
+
+        private int[] IdentifyExcess(string[] str)
+        {
+            int[] answer = new int[2] { 0, 0 };
+
+            for (int i = int.Parse(str[0]) + 1; i < str.Length - 1; i++)
+            {
+                string[] str2 = str[i].Split('\t');
+
+                if ((str2[2] + "\r").Equals(maxTemp.Text))
+                    answer[0] += 10;
+                else if((str2[2] + "\r").Equals(minTemp.Text))
+                    answer[1] += 10;
+            }
+
+            return answer;
         }
 
         private void CreateReport_Click(object sender, RoutedEventArgs e)
@@ -105,9 +126,22 @@ namespace TemperatureMonitoringWPF
                 ReportWindow report = new ReportWindow();
                 report.Owner = this;
                 if (!minTemp.Text.Equals("") && !minTime.Text.Equals(""))
-                    report.Buffer.Text = ParseDateWithMin();
+                {
+                    string str = ParseDateWithMin();
+                    report.Buffer.Text = str;
+                    int[] vs = IdentifyExcess(str.Split('\n'));
+                    report.BufferInt.Text += vs[0].ToString() + "\n";
+                    report.BufferInt.Text += vs[1].ToString();
+                }
                 else
-                    report.Buffer.Text = ParseDateWithoutMin();
+                {
+                    string str = ParseDateWithoutMin();
+                    report.Buffer.Text = str;
+                    int[] vs = IdentifyExcess(str.Split('\n'));
+                    report.BufferInt.Text += vs[0].ToString() + "\n";
+                    report.BufferInt.Text += vs[1].ToString();
+                }
+                    
                 report.Show();
             }
         }
