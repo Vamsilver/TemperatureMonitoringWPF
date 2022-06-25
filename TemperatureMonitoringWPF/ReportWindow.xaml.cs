@@ -61,16 +61,19 @@ namespace TemperatureMonitoringWPF
             }
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var saveFile = new Microsoft.Win32.SaveFileDialog();
-            
-        //    if(saveFile.ShowDialog() == true)
-        //    {
-        //        StreamWriter sw = new StreamWriter(saveFile.FileName);
-        //        sw.Write("Hello World!!");
-        //        sw.Close();
-        //    }
-        //}
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var saveFile = new Microsoft.Win32.SaveFileDialog();
+
+            saveFile.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if (saveFile.ShowDialog() == true)
+            {
+                StreamWriter sw = new StreamWriter(saveFile.FileName);
+                sw.Write(ReportMessage.Text + "\n");
+                sw.Write(Report.Text + "\n");
+                sw.Close();
+            }
+        }
     }
 }

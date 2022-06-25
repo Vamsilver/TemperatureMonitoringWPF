@@ -7,15 +7,19 @@
         mc:Ignorable="d"
         Title="Report" Height="600" Width="900" Loaded="Window_Loaded">
     <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="307*"/>
             <RowDefinition Height="107*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="Report" Grid.Row="0" Grid.Column="0" FontSize="24" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
-        <TextBox x:Name="ReportMessage" Grid.Row="1" Grid.Column="0" FontSize="24" IsReadOnly="True"/>
-        <TextBox x:Name="Buffer" Foreground="Transparent" Background="Transparent" IsReadOnly="True"/>
-        <TextBox x:Name="BufferInt" Foreground="Transparent" Background="Transparent" IsReadOnly="True"/>
-        <Button Content="Save" Width="50" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <TextBox x:Name="Report" Grid.Row="0" Grid.Column="0" FontSize="24" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="ReportMessage" Grid.Column="0" FontSize="24" IsReadOnly="True" Grid.ColumnSpan="2" Margin="0,418,0,0" Grid.RowSpan="2"/>
+        <TextBox x:Name="Buffer" Foreground="Transparent" Background="Transparent" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="BufferInt" Foreground="Transparent" Background="Transparent" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <Button Content="Save" FontSize="19" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Click="Button_Click" Width="60" Height="30"/>
     </Grid>
 
 
