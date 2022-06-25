@@ -148,6 +148,14 @@ namespace TemperatureMonitoringWPF
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
+            FishName.Text = "";
+            minTemp.Text = "";
+            maxTemp.Text = "";
+            minTime.Text = "";
+            maxTime.Text = "";
+            Date.Text = "";
+            Temperature.Text = "";
+
             OpenFileDialog fileDialog = new OpenFileDialog();
             if (fileDialog.ShowDialog() == true)
             {

@@ -20,8 +20,6 @@ namespace TemperatureMonitoringWPF
     /// </summary>
     public partial class ReportWindow : Window
     {
-        int maxTemp;
-        int? minTemp;
 
         public ReportWindow()
         {
@@ -31,13 +29,6 @@ namespace TemperatureMonitoringWPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var str = Buffer.Text.Split('\n');
-
-            maxTemp = int.Parse(str[1]);
-
-            if (str[0].Equals("2"))
-            {
-                minTemp = int.Parse(str[2]);
-            }
 
             for (int i = int.Parse(str[0]) + 1; i < str.Length - 1; i++)
             {
