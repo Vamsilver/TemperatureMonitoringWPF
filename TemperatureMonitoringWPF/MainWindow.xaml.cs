@@ -107,6 +107,7 @@ namespace TemperatureMonitoringWPF
                 Date.Text = text[0];
                 Temperature.Text = text[1];
             }
+
         }
     }
 }
