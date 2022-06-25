@@ -29,12 +29,14 @@ namespace TemperatureMonitoringWPF
             InitializeComponent();
         }
 
-        private string ParseDate()
+        private string ParseDateWithMin()
         {
             int maxTempInt = int.Parse(maxTemp.Text.ToString());
-            int minTempInt = int.Parse(minTemp.Text.ToString());
             int maxTimeInt = int.Parse(maxTime.Text.ToString());
+            
+            int minTempInt = int.Parse(minTemp.Text.ToString());
             int minTimeInt = int.Parse(minTime.Text.ToString());
+
             var date = DateTime.Parse(Date.Text.ToString());
 
             string[] vs = Temperature.Text.ToString().Split(' ');
@@ -61,10 +63,40 @@ namespace TemperatureMonitoringWPF
             return str;
         }
 
+        private string ParseDateWithoutMin()
+        {
+            int maxTempInt = int.Parse(maxTemp.Text.ToString());
+            int maxTimeInt = int.Parse(maxTime.Text.ToString());
+
+            var date = DateTime.Parse(Date.Text.ToString());
+
+            string[] vs = Temperature.Text.ToString().Split(' ');
+            int[] temp = new int[vs.Length];
+
+            string str = "";
+
+            for (int i = 0; i < vs.Length; i++)
+            {
+                temp[i] = int.Parse(vs[i].ToString());
+            }
+
+            foreach (var t in temp)
+            {
+                date.AddMinutes(10);
+                if (t > maxTempInt)
+                {
+                    str += date.ToString() + "\t" + t + "\t" + maxTempInt + "\t" + (maxTempInt - t) + "\n";
+                }
+            }
+
+            MessageBox.Show(str);
+            return str;
+        }
+
         private void CreateReport_Click(object sender, RoutedEventArgs e)
         {
-            if (Date.Text.Equals("") || Temperature.Text.Equals("") || maxTemp.Text.Equals("")
-                    || maxTime.Text.Equals("") || minTemp.Text.Equals("") || minTime.Text.Equals(""))
+            if (Date.Text.Equals("") || Temperature.Text.Equals("") ||
+                maxTemp.Text.Equals("" )|| maxTime.Text.Equals(""))
             {
                 MessageBox.Show("Введите все необходимые данные", "Отсутствие данных");
             }
@@ -72,7 +104,10 @@ namespace TemperatureMonitoringWPF
             {
                 ReportWindow report = new ReportWindow();
                 report.Owner = this;
-                report.Buffer.Text = ParseDate();
+                if (!minTemp.Text.Equals("") && !minTime.Text.Equals(""))
+                    report.Buffer.Text = ParseDateWithMin();
+                else
+                    report.Buffer.Text = ParseDateWithoutMin();
                 report.Show();
             }
         }
