@@ -127,14 +127,23 @@ namespace TemperatureMonitoringWPF
             if(text.Length > 3)
             {
                 foreach(var s in text)
-                {
+                { 
                     FishName.Text = text[0];
                     maxTemp.Text = text[1];
                     maxTime.Text = text[2];
-                    minTemp.Text = text[3];
-                    minTime.Text = text[4];
+
+                    if (text[3].Equals(".\r"))
+                    {
+                        minTemp.Text = "";
+                        minTime.Text = "";
+                    }
+                    else
+                    {
+                        minTemp.Text = text[3];
+                        minTime.Text = text[4];
+                    }
                     Date.Text = text[5];
-                    Temperature.Text = text[6]; 
+                    Temperature.Text = text[6];
                 }
             }
             else
